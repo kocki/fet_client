@@ -17,28 +17,20 @@
     },
     computed: {
       buyAmount() {
-        // eslint-disable-next-line no-console
-        console.log(this.trade.rate)
         return this.trade.sellAmount * this.rate
       },
       rate() {
-        // eslint-disable-next-line no-console
-        console.log('rate')
         return this.trade.rate
       },
     },
     watch: {
       'trade.sellCurrency'(newValue, oldValue) {
         if (newValue != oldValue) {
-          // eslint-disable-next-line no-console
-          console.log('sell')
           this.trade.rate = this.getRate()
         }
       },
       'trade.buyCurrency'(newValue, oldValue) {
         if (newValue != oldValue) {
-          // eslint-disable-next-line no-console
-          console.log('buy')
           this.trade.rate = this.getRate()
         }
       }
@@ -49,7 +41,8 @@
           this.symbols = response.data.symbols
         })
         .catch((err) => {
-          this.errors.push(err)
+          // eslint-disable-next-line no-console
+          console.log(err)
         })
     },
     methods: {
@@ -57,19 +50,16 @@
         if (this.trade.sellCurrency.length & this.trade.buyCurrency.length) {
           axios.get('rate/', {params: {sell: this.trade.sellCurrency, buy: this.trade.buyCurrency}})
             .then(response => {
-              // eslint-disable-next-line no-console
-              console.log(response.data.rate)
               this.trade.rate = response.data.rate
             })
             .catch((err) => {
-              this.errors.push(err)
+              // eslint-disable-next-line no-console
+              console.log(err)
             })
         }
         this.trade.rate = null
       },
       checkTrade(e) {
-        // eslint-disable-next-line no-console
-        console.log(this.trade)
         const payload = {
           sell_amount: this.trade.sellAmount,
           sell_currency: this.trade.sellCurrency,
@@ -77,14 +67,12 @@
           rate: this.trade.rate
         }
         axios.post('fet/', payload)
-          .then(response => {
-            // eslint-disable-next-line no-console
-            console.log(response)
+          .then(() => {
             this.$router.push({name: 'bookedTrades'})
           })
           .catch((err) => {
             // eslint-disable-next-line no-console
-            console.log(err)
+            this.errors.push(err)
           })
         e.preventDefault(e)
       }
@@ -93,30 +81,61 @@
 </script>
 
 <template>
-  <div class="form trade">
-    <form v-on:submit="checkTrade" method="post">
-      <select v-model="trade.sellCurrency">
-        <option disabled value=""></option>
-        <option v-for="option in symbols" :value="option[0]" :key="option[0]">
-          {{ option[1] }}
-        </option>
-      </select>
-      <span>{{ rate|formatRate }}</span>
-      <select v-model="trade.buyCurrency">
-        <option disabled value=""></option>
-        <option v-for="option in symbols" :value="option[0]" :key="option[0]">
-          {{ option[1] }}
-        </option>
-      </select>
-      <br>
-      <input v-model="trade.sellAmount" placeholder="#0.00">
-      <input v-model="buyAmount" placeholder="#0.00" disabled>
-      <div>
-        <button type="submit">Create</button>
-        <router-link tag="button" :to="{name: 'bookedTrades'}">Cancel</router-link>
-      </div>
-    </form>
-  </div>
+  <v-form>
+    <v-container fluid grid-list-xl>
+      <h1>Create Trade</h1>
+      <p class="caption">Free fixer.io account services only EUR sell currency.</p>
+      <v-layout wrap align-center justify-center column>
+        <v-layout wrap align-center justify-center row>
+          <v-flex xs4 sm2 d-flex>
+            <v-autocomplete
+                    v-bind:items="symbols"
+                    v-model="trade.sellCurrency"
+                    item-text="1"
+                    item-value="0"
+                    label="Sell Currency"
+            ></v-autocomplete>
+          </v-flex>
+          <v-flex xs4 sm2 d-flex>
+            <v-text-field
+                    v-model="rate"
+                    label="Rate"
+                    disabled
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs4 sm2 d-flex>
+            <v-autocomplete
+                    v-bind:items="symbols"
+                    v-model="trade.buyCurrency"
+                    item-text="1"
+                    item-value="0"
+                    label="Buy Currency"
+            ></v-autocomplete>
+          </v-flex>
+        </v-layout>
+        <v-layout wrap align-center justify-center row>
+          <v-flex xs4 sm3 d-flex>
+            <v-text-field
+                    v-model="trade.sellAmount"
+                    label="Sell Amount"
+            ></v-text-field>
+          </v-flex>
+          <v-flex xs4 sm3 d-flex></v-flex>
+          <v-flex xs4 sm3 d-flex>
+            <v-text-field
+                    v-model="buyAmount"
+                    label="Buy Amount"
+                    disabled
+            ></v-text-field>
+          </v-flex>
+        </v-layout>
+        <v-layout align-center justify-center row>
+          <v-btn @click="checkTrade" color="info">Create</v-btn>
+          <v-btn :to="{name: 'bookedTrades'}">Cancel</v-btn>
+        </v-layout>
+      </v-layout>
+    </v-container>
+  </v-form>
 </template>
 
 <style scoped>

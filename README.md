@@ -32,3 +32,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 * add component library and make better look
 * add unittests
 
+### Warnings
+* Free fixer.io account services only EUR sell currency.
