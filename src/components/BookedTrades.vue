@@ -8,12 +8,12 @@
         errors: [],
         bookedTrades: [],
         headers: [
-          {text: 'Sell CCY', value: 'sell_currency'},
-          {text: 'Sell Amount', value: 'sell_amount'},
-          {text: 'Buy CCY', value: 'buy_currency'},
-          {text: 'Buy Amount', value: 'buy_amount'},
-          {text: 'Rate', value: 'rate'},
-          {text: 'Date Booked', value: 'date_booked'}
+          {text: 'Sell CCY', value: 'sell_currency', align: 'right'},
+          {text: 'Sell Amount', value: 'sell_amount', align: 'right'},
+          {text: 'Buy CCY', value: 'buy_currency', align: 'right'},
+          {text: 'Buy Amount', value: 'buy_amount', align: 'right'},
+          {text: 'Rate', value: 'rate', align: 'right'},
+          {text: 'Date Booked', value: 'date_booked', align: 'right'}
         ]
       }
     },
@@ -43,12 +43,12 @@
             class="elevation-1"
     >
       <template v-slot:items="props">
-        <td>{{ props.item.sell_currency }}</td>
-        <td>{{ props.item.sell_amount|formatAmount }}</td>
-        <td>{{ props.item.buy_currency }}</td>
-        <td>{{ props.item.buy_amount|formatAmount }}</td>
-        <td>{{ props.item.rate|formatRate }}</td>
-        <td>{{ props.item.date_booked|formatDate }}</td>
+        <td class="text-sm-right">{{ props.item.sell_currency }}</td>
+        <td class="text-sm-right">{{ props.item.sell_amount|formatAmount }}</td>
+        <td class="text-sm-right">{{ props.item.buy_currency }}</td>
+        <td class="text-sm-right">{{ props.item.buy_amount|formatAmount }}</td>
+        <td class="text-sm-right">{{ props.item.rate|formatRate }}</td>
+        <td class="text-sm-right">{{ props.item.date_booked|formatDate }}</td>
       </template>
     </v-data-table>
   </div>
