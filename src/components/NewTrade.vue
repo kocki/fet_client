@@ -84,6 +84,7 @@
   <v-form>
     <v-container fluid grid-list-xl>
       <h1>Create Trade</h1>
+      <p class="caption">Free fixer.io account services only EUR sell currency.</p>
       <v-layout wrap align-center justify-center column>
         <v-layout wrap align-center justify-center row>
           <v-flex xs4 sm2 d-flex>
