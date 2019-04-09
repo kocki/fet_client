@@ -32,6 +32,7 @@ const router = new VueRouter({
 
 new Vue({
   router,
+      components: { App },
+    template: "<App/>",
   render: h => h(App),
 }).$mount('#app')
-// eslint-disable-next-line no-console
