@@ -29,7 +29,6 @@ yarn run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### To Do
-* add component library and make better look
 * add unittests
 
 ### Warnings
